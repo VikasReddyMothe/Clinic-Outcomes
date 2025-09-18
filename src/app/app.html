@@ -1,0 +1,115 @@
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h2>Clinic Outcomes</h2>
+    <div class="actions">
+      <div class="date-filters">
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedRange === 30"
+          (click)="setDateRange(30)">
+          30 days
+        </button>
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedRange === 60"
+          (click)="setDateRange(60)">
+          60 days
+        </button>
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedRange === 90"
+          (click)="setDateRange(90)">
+          90 days
+        </button>
+      </div>
+      <button class="print-btn">Print</button>
+    </div>
+  </div>
+
+  <!-- Sub header -->
+  <p class="subtitle">
+    Showing {{activePatients}} patients from last {{selectedRange}} days of available data from
+    {{dateRangeStart | date:'MM/dd/yyyy'}} - {{dateRangeEnd | date:'MM/dd/yyyy'}}
+    <br />
+    <span class="note">
+      Only patients with a minimum of 10 days of SG data are included.
+      Last updated: {{lastUpdated | date:'MM/dd/yyyy, h:mm a'}}
+    </span>
+  </p>
+
+  <!-- Charts row -->
+  <div class="charts-row">
+    <!-- Time in Range -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Time in range</h3>
+        <span class="info-icon">i</span>
+      </div>
+      <div class="chart-container bar-chart">
+        <canvas
+          baseChart
+          [data]="timeInRangeChartData"
+          [options]="barChartOptions"
+          [type]="barChartType">
+        </canvas>
+      </div>
+
+      
+
+      <div class="tir-legend">
+        <div class="legend-group">
+          40
+          <span class="legend dark-red"></span> 54
+          <span class="legend hatched-red"></span> 70
+          <span class="legend green"></span> 180
+          <span class="legend hatched-orange"></span> 240
+          <span class="legend orange"></span> 400
+        </div>
+        <div class="tir-unit">mg/dL</div>
+      </div>
+      
+
+
+    </div>
+
+
+   
+
+    <!-- GMI -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Glucose Management Indicator (GMI)</h3>
+      </div>
+      <div class="gmi-value">
+        <div class="label">AVERAGE GMI</div>
+        <div class="value">{{averageGmi}}%</div>
+      </div>
+      <div class="chart-container">
+        <canvas
+          baseChart
+          [data]="gmiChartData"
+          [options]="gmiChartOptions"
+          [type]="pieChartType">
+        </canvas>
+      </div>
+
+      <div class="gmi-legend">
+        <div class="legend-item">
+          ≤7%
+          <span class="legend green"></span>
+        </div>
+        <div class="legend-item">
+          7–8%
+          <span class="legend yellow"></span> 
+        </div>
+        <div class="legend-item">
+          >8%
+          <span class="legend red"></span>
+        </div>
+        <div class="legend-unit">GMI (%)</div>
+      </div>
+
+    </div>
+  </div>
+</div>
